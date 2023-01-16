@@ -1,0 +1,29 @@
+{% load static %}
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid d-flex justify-content-between">
+        <a class="navbar-brand">CvCampus</a>
+        <div class='d-flex align-items-center'>
+            <div class="sm-d-none">
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                </form>
+            </div>
+            <div class="dropdpwn user--nav--info">
+                <div class="d-flex dropdown-toggle align-items-center gap-1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <div>
+                        <img class="avatar--md avatar--border" src="{% static 'img/profile.jpg'%}" alt="">
+                    </div>
+                    <div class="d-flex flex-column align-items-start sm-d-none">
+                        <span class="small">@herman_melo</span>
+                        <span class="small">Universidade do mindelo</span>
+                    </div>
+                    <ul class="dropdown-menu dropdown-menu-end" style="right: 5px;">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div> 
+    </div>
+</nav>
