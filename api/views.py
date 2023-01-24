@@ -1,19 +1,41 @@
 from django.shortcuts import render, redirect
 from .serializers import DocumentSerializer
 from .models import Document
+from rest_framework import generics, mixins
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
+from rest_framework import filters
 from django.db.models import Q 
+from django.http import JsonResponse, HttpResponse
 
-# Create your views here.
 
-@api_view(['GET'])
-def getRoutes(request):
-	data = {
-		'api-document-list': '/api/documents'
-	}
-	return Response(data)
+
+
+class DocumentMixinView(mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.CreateModelMixin, mixins.UpdateModelMixin, generics.GenericAPIView):
+	queryset = Document.objects.all()
+	serializer_class = DocumentSerializer
+	lookup_field = 'pk'
+
+	filter_backends = [filters.SearchFilter]
+	search_fields = ['title', 'description', 'tags__title', 'user__username']
+
+	def get(self, request, *args, **kwargs): #HTTP GET
+		print(args, kwargs)
+		pk = kwargs.get('pk')
+		if pk is not None:
+			return self.retrieve(request, *args, **kwargs)
+		return self.list(request, *args, **kwargs)
+
+	def post(self, request, *args, **kwargs):  #HTTP POST
+		return self.create(request, *args, **kwargs)
+
+	def put(self, request, *args, **kwargs):  #HTTP PUT
+		return self.update(request, *args, **kwargs)
+
+
+
+
 
 @api_view(['GET'])
 def getDocumentsList(request):
@@ -71,4 +93,5 @@ def uploadDocuments(request):
 				return redirect('documents-list')
 			else:
 				raise serializers.ValidationError("Something's wrong happended")
+
 	

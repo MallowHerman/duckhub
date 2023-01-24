@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-*!ag4#%(re9129-d9qxuj7(*27^gr)q3r+%q-z0ku(nr!m-nyg
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'e118-165-90-99-16.eu.ngrok.io']
+ALLOWED_HOSTS = ['127.0.0.1', '46bd-165-90-99-16.eu.ngrok.io', 'localhost:8000']
 
 
 # Application definition
@@ -37,14 +37,15 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'django.contrib.st          aticfiles',
 
     'rest_framework',
     'corsheaders',
     'fontawesomefree',
+    'crispy_forms',
 
     'api.apps.ApiConfig',
-    'base.apps.BaseConfig'
+    'frontend.apps.FrontendConfig'
 ]
 
 MIDDLEWARE = [
@@ -108,6 +109,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 20
+}
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
@@ -139,3 +145,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

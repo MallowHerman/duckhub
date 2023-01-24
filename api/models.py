@@ -62,14 +62,6 @@ class Subject(models.Model):
 		self.slug = slugify(self.title)
 		return super().save(*args, **kwargs)
 
-class Document_file_viewer_background(models.Model):
-	title = models.CharField(max_length=100, blank=True, null=True)
-	document_id = models.ForeignKey('Document', on_delete=models.CASCADE, null=True)
-	background_file = models.FileField(upload_to='documents/background_files/')
-
-	def __str__(self):
-		return self.title
-
 
 
 class Document(models.Model):
@@ -77,16 +69,15 @@ class Document(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 	title = models.CharField(max_length=300)
 	slug = models.SlugField(null=True, blank=True)
-	description = models.TextField(null=True)
-	thumbnail = models.ImageField(upload_to='thumbnail/')
+	description = models.TextField(null=True, blank=True)
+	thumbnail = models.FileField(upload_to='thumbnail/', default='poster.png')
 	document_file = models.FileField(upload_to='documents/')
-	document_file_viewer = models.ManyToManyField(Document_file_viewer_background, related_name="document_file_viewer")
 	category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
 	tags = models.ManyToManyField(Tags, related_name="tags")
 	school = models.ForeignKey(School, on_delete=models.SET_NULL, null=True)
 	course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True)
 	subject = models.ForeignKey(Subject, on_delete=models.SET_NULL, null=True)
-	likes = models.ManyToManyField(User, related_name="document_likes")
+	likes = models.ManyToManyField(User, related_name="likes")
 	downloads  = models.ManyToManyField(User, related_name="document_downloads")
 
 	created = models.DateTimeField(auto_now_add=True)
@@ -97,9 +88,24 @@ class Document(models.Model):
 
 	def __str__(self):
 		return self.title
+	
+	@property
+	def get_likes(self):
+		return self.likes.all()
+	
+	@property
+	def get_total_likes(self):
+		return self.likes.all().count
+
+	@property
+	def get_total_downloads(self):
+		return self.downloads.all().count
 
 
 	def save(self, *args, **kwargs):
+		if self.description == '':
+			self.description = self.title
+		
 		self.slug = slugify(self.title)
 		return super().save(*args, **kwargs)
 
