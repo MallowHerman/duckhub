@@ -1,36 +1,57 @@
 {% extends 'index.html' %}
 {% load static %}
 {% block content %}
-    <div class="container" style="max-width: 1000px;">
-        <div class="row">
+<div class="container" style="max-width: 1000px;">
+    <div class="row">
+        <div class="my-3">
+            <div class="form--group shadow-sm w-100">
+                <form method="GET" class="w-100 d-flex">
+                    <input class="w-100" name="query_search" type='text' placeholder="Pesquisar anotações, resumos, livros..."/>
+                    <button type="submit" class="btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </form>
+            </div>
+        </div>
+        <div>
+            <small>{{page.object_list.count}} {%if page.object_list.count == 1 %}documento{% else %}documentos{% endif %}</small>
+        </div>
+        <div class="main--content col-8 h-100">
+             <div id="documents-list-wrapper">
+                {% for document in page.object_list %}
+                    {% include 'frontend/components/documentCard.html' %}
+                {% endfor %}
+            </div>
+            {% if page.paginator.num_pages > 1 %}
             <div class="my-3">
-                <div class="form--group shadow-sm w-100">
-                    <form id="form--wrapper" class="w-100 d-flex">
-                        <input class="w-100" id="query_search" type='text' placeholder="Pesquisar anotações, resumos, livros..."/>
-                        <button class="btn"><i class="fa-solid fa-magnifying-glass"></i></button>
-                    </form>
-                </div>
+                <nav class="" aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        {% if page.has_previous %}
+                            <li class="page-item"><a class="page-link" href="{% url 'document-list' %}?page={{page.previous_page_number}}">Previous</a></li>
+                        {% endif %}
+                        {% for num_page in page.paginator.page_range %}
+                        {% if num_page == page.number %}
+                            <li class="page-item"><a class="page-link active" href="{% url 'document-list' %}?page={{num_page}}">{{num_page}}</a></li>
+                        {% else %}
+                            <li class="page-item"><a class="page-link" href="{% url 'document-list' %}?page={{num_page}}">{{num_page}}</a></li>
+                        {% endif %}
+                        {% endfor %}
+                        
+                        {% if page.has_next %}
+                            <li class="page-item"><a class="page-link" href="{% url 'document-list' %}?page={{page.next_page_number}}">Next</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
             </div>
-            <div>
-                <small id='result_count'></small>
-            </div>
-            <div class="main--content col-8">
-                <div id="load--spinner" class="text-center" style="display: block;">
-                    <div class="spinner-border text-secondary" role="status">
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
-                </div>
-                 <div id="documents-list-wrapper">
-                </div>
-            </div>
-            <div class="side--info col md-d-none" style="margin-left: 15px;">
-                <div class="card mt-2" style="height: 80vh;">
-                    <div class="card-body">
-                        Side
-                    </div>
+            {% endif %}
+        </div>
+        <div class="side--info col md-d-none" style="margin-left: 15px;">
+            <div class="card mt-2" style="height: 80vh;">
+                <div class="card-body">
+                    Side
                 </div>
             </div>
         </div>
     </div>
+</div>
+
 {% endblock content %}
 

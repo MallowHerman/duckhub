@@ -90,6 +90,10 @@ input {
     .sm-d-none {
         display: none!important;
     }
+
+    .sm-mr-2 {
+        right: 1rem!important;
+    }
 }
 
 @media only screen and (max-width: 768px) {

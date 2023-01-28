@@ -1,0 +1,84 @@
+{% load static %}
+
+<div id='document_card rounded' class="card mt-2 p-2">
+    <div class="card-body" style='padding: 0;'>
+        <div class='d-flex'>
+            <div class="text-center d-none">
+                <div>
+                    <button type='button'  class="btn p-0"><i class="fa-solid fa-chevron-up"></i></button>
+                </div>
+                <div id='likes'>3</div>
+                <div>
+                    <button class="btn p-0"><i class="fa-solid fa-chevron-down"></i></button>
+                </div>
+            </div>
+            <div class="pl-2" style="flex: 1;">
+                <div class="d-flex">
+                    <div style='max-width: 80px; max-height: 110px;'>
+                        <img class='w-100 h-100 rounded' src="{% static 'img/poster.png' %}" alt="" style="overflow: hidden; object-fit: cover; object-position: top;"/>
+                    </div>
+                    <div class="ml-2">
+                        <div>
+                            <div>
+                                <a class="card-title" href="#" style="font-weight: 500;">{{document.title}}</a>
+                                <span class='chip'>{{document.category.title}}</span>
+                            </div>    
+                            <div class="d-flex flex-column" >
+                                <span class="small">{{document.school.title}}</span>
+                                <span class="small">{{document.subject.title}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex gap-1 mt-1" style="align-items: center; float: right;">
+            <div>
+                <img class="avatar--sm avatar--border" src="{% static 'img/profile.jpg' %}" alt=""/>
+            </div>
+            <div class="small">
+               {{document.user.username}}
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-between mt-1 pt-1 px-2 text-muted" style='border-top: 1px solid lightgray;'>
+        <div class='d-flex gap-1' style='align-items: center; border: 1px solid lightgray; border-radius: 15px; padding: 0px 10px;'>
+            <div>
+                <button id='buttonUpVote-${i}' onClick="upVote(${i}, '${result[i].id}')" type='button' class="btn p-0">
+                <svg id='svgUpVote-${i}' fill="#212529bf" height="16px" width="16px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                viewBox="0 0 511.947 511.947" xml:space="preserve">
+           <g>
+               <g>
+                   <path d="M476.847,216.373L263.513,3.04c-4.267-4.053-10.88-4.053-15.04,0L35.14,216.373c-4.16,4.16-4.16,10.88-0.107,15.04
+                       c2.027,2.027,4.8,3.2,7.573,3.2h128V501.28c0,5.867,4.8,10.667,10.667,10.667h149.333c5.867,0,10.667-4.8,10.667-10.667V234.613
+                       h128c5.867,0,10.667-4.8,10.667-10.667C479.94,221.067,478.873,218.4,476.847,216.373z M330.607,213.28
+                       c-5.867,0-10.667,4.8-10.667,10.667v266.667h-128V223.947c0-5.867-4.8-10.667-10.667-10.667H68.42L255.94,25.547L443.567,213.28
+                       H330.607z"/>
+               </g>
+           </g>
+           </svg>
+                </button>
+            </div>
+            <div class='small' id='total-likes-${i}'>{{document.get_total_likes}}</div>
+            <div>
+                <button id='buttonDownVote-${i}' onClick="downVote(${i}, '${result[i].id}')" class="btn p-0">
+                <svg id='svgDownVote-${i}' fill="#212529bf" height="16px" width="16px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                viewBox="0 0 512.027 512.027" xml:space="preserve">
+           <g>
+               <g>
+                   <path d="M479.114,283.84c-1.707-3.947-5.547-6.507-9.813-6.507h-128V10.667C341.3,4.8,336.5,0,330.633,0H181.3
+                       c-5.867,0-10.667,4.8-10.667,10.667v266.667h-128c-5.867,0-10.667,4.8-10.56,10.773c0,2.773,1.067,5.44,3.093,7.36L248.5,508.907
+                       c4.16,4.16,10.88,4.16,15.04,0l213.333-213.44C479.86,292.373,480.82,287.893,479.114,283.84z M255.967,486.293L68.34,298.667
+                       H181.3c5.867,0,10.667-4.8,10.667-10.667V21.333h128V288c0,5.867,4.8,10.667,10.667,10.667h112.96L255.967,486.293z"/>
+               </g>
+           </g>
+           </svg>
+                </button>
+            </div>
+        </div>
+    
+        <div class='small'>
+            <i class="fa-regular fa-bookmark"></i>
+        </div>
+    </div>
+</div>

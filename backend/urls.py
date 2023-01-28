@@ -17,12 +17,15 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from accounts import views as accounts_views
 
 
 urlpatterns = [
     path('', include('frontend.urls')),
     path('admin/', admin.site.urls),
-    path('api/', include('api.urls'))
+    path('api/', include('api.urls')),
+    path('login', accounts_views.loginView, name='login'),
+    path('logout', accounts_views.logoutView, name='logout')
 ]
 
 if settings.DEBUG:

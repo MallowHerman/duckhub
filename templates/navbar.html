@@ -1,11 +1,11 @@
 {% load static %}
-<nav class="navbar ">
-    <div class="container d-flex justify-content-between">
-        <a href="#" class="navbar-brand">CvCampus</a>
+<nav class="navbar container">
+    <div class="w-100 d-flex justify-content-between mx-2">
+        <a href="{% url 'frontend:document-list' %}" class="navbar-brand">CvCampus</a>
         <div class='d-flex align-items-center'>
             <div class="md-d-none">
                 <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <input class="form-control me-2" name='query_search' type="search" placeholder="Search" aria-label="Search">
                 </form>
             </div>
             <div class="mr-4"><i class="fa-solid fa-magnifying-glass"></i></div>
@@ -18,12 +18,12 @@
                         <span class="small">@{{request.user}}</span>
                         <span class="small">Universidade do mindelo</span>
                     </div>
-                    <ul class="dropdown-menu dropdown-menu-end" style="right: 5px;">
-                        <li><a class="dropdown-item" href="{% url 'document-upload' %}">Perfil</a></li>
-                        <li><a class="dropdown-item" href="{% url 'document-upload' %}">Publicar material</a></li>
-                        <li><a class="dropdown-item text-danger" href="#">Deslogar</a></li>
-                    </ul>
                 </div>
+                <ul class="dropdown-menu dropdown-menu-end sm-mr-2">
+                    <li><a class="dropdown-item" href="{#">Perfil</a></li>
+                    <li><a class="dropdown-item" href="{% url 'frontend:document-upload' %}">Publicar material</a></li>
+                    <li><a class="dropdown-item text-danger" href="{% url 'logout' %}">Deslogar</a></li>
+                </ul>
             </div>
         </div> 
     </div>

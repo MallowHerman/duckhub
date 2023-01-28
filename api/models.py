@@ -2,6 +2,7 @@ from django.db import models
 import uuid
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
+from taggit.managers import TaggableManager
 
 # Create your models here.
 
@@ -11,7 +12,7 @@ class Category(models.Model):
 	updated = models.DateTimeField(auto_now=True)
 
 	def __str__(self):
-		return self.title
+		return self.title or ''
 
 class Tags(models.Model):
 	title = models.CharField(max_length=100, null=True)
@@ -19,7 +20,7 @@ class Tags(models.Model):
 	updated = models.DateTimeField(auto_now=True)
 
 	def __str__(self):
-		return self.title
+		return self.title or ''
 
 class School(models.Model):
 	title = models.CharField(max_length=100, null=True)
@@ -28,7 +29,7 @@ class School(models.Model):
 	updated = models.DateTimeField(auto_now=True)
 
 	def __str__(self):
-		return self.title
+		return self.title or ''
 	
 	def save(self, *args, **kwargs):
 		self.slug = slugify(self.title)
@@ -42,7 +43,7 @@ class Course(models.Model):
 	updated = models.DateTimeField(auto_now=True)
 
 	def __str__(self):
-		return self.title
+		return self.title or ''
 
 	def save(self, *args, **kwargs):
 		self.slug = slugify(self.title)
@@ -56,7 +57,7 @@ class Subject(models.Model):
 	updated = models.DateTimeField(auto_now=True)
 
 	def __str__(self):
-		return self.title
+		return self.title or ''
 
 	def save(self, *args, **kwargs):
 		self.slug = slugify(self.title)
@@ -65,7 +66,7 @@ class Subject(models.Model):
 
 
 class Document(models.Model):
-	id = models.UUIDField(primary_key = True, unique= True, default = uuid.uuid4, editable = False)
+	#id = models.UUIDField(primary_key = True, unique= True, default = uuid.uuid4, editable = False)
 	user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 	title = models.CharField(max_length=300)
 	slug = models.SlugField(null=True, blank=True)
@@ -73,12 +74,12 @@ class Document(models.Model):
 	thumbnail = models.FileField(upload_to='thumbnail/', default='poster.png')
 	document_file = models.FileField(upload_to='documents/')
 	category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
-	tags = models.ManyToManyField(Tags, related_name="tags")
 	school = models.ForeignKey(School, on_delete=models.SET_NULL, null=True)
 	course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True)
 	subject = models.ForeignKey(Subject, on_delete=models.SET_NULL, null=True)
 	likes = models.ManyToManyField(User, related_name="likes")
 	downloads  = models.ManyToManyField(User, related_name="document_downloads")
+	key_words = TaggableManager()
 
 	created = models.DateTimeField(auto_now_add=True)
 	updated = models.DateTimeField(auto_now=True)
@@ -87,7 +88,7 @@ class Document(models.Model):
 		ordering = ['-created', '-updated']
 
 	def __str__(self):
-		return self.title
+		return self.title or ''
 	
 	@property
 	def get_likes(self):

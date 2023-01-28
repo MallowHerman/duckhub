@@ -6,32 +6,27 @@
         <h1>Publicar novo material</h1>
     </div>
     <div class="shadow bg-white rounded p-4 my-4">
-        <form action="" method="POST" enctype="multipart/form-data">
+        <form action="{% url 'frontend:document-upload' %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-             <div class="mb-3">
+            <div class="mb-3">
               <label for="formFileMultiple" class="form-label">Carregar materiais</label>
-              <input class="form-control" type="file" id="formFileMultiple" name='document' multiple required>
+              {{form.document_file}}
             </div>
 
             
             <div class="form-group">
                 <label for="exampleInputEmail1">Título do material</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" name='name' aria-describedby="emailHelp" required>
+                {{form.title}}
             </div>
 
             <div class="form-group my-3">
                 <label for="exampleInputEmail1">Tipo de material</label>
-                <select class="form-select" aria-label="Default select example" name="category" required>
-                    <option value=""></option>
-                  {% for item in category %}
-                    <option value="{{item.title}}">{{item.title}}</option>
-                  {% endfor %}
-                </select>
+                {{form.category}}
             </div>
 
             <div class="my-3">
                 <label for="exampleDataList" class="form-label">Disciplina</label>
-                <input class="form-control" list="datalistSubject" name='subject' id="exampleDataList" required>
+                {{form.subject}}
                 <datalist id="datalistSubject">
                     {% for subject in subjects %}
                         <option value="{{subject.title}}">
@@ -41,7 +36,7 @@
 
             <div class="my-3">
                 <label for="exampleDataList" class="form-label">Universidade</label>
-                <input class="form-control" list="datalistSchool" name='school' id="exampleDataList" required>
+                {{form.school}}
                 <datalist id="datalistSchool">
                   {% for school in schools %}
                         <option value="{{school.title}}">
@@ -51,7 +46,7 @@
 
             <div class="my-3">
                 <label for="exampleDataList" class="form-label">Curso</label>
-                <input class="form-control" list="datalistCourse" name='course' id="exampleDataList" required>
+                {{form.course}}
                 <datalist id="datalistCourse">
                   {% for course in courses %}
                         <option value="{{course.title}}">
@@ -61,12 +56,12 @@
 
             <div class="form-group">
                 <label for="exampleInputEmail1">Palavras Chaves</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" name='tags' aria-describedby="emailHelp" required>
+                {{form.key_words}}
             </div>
 
             <div class="mb-3">
               <label for="exampleFormControlTextarea1" class="form-label">Descrição do material</label>
-              <textarea class="form-control" id="exampleFormControlTextarea1" name='description' rows="3"></textarea>
+              {{form.description}}
             </div>
 
             
@@ -75,8 +70,8 @@
             <div>
                 <button type="submit" class="btn btn-success w-100">Publicar</button>
             </div>
-            <div class="text-center mt-1">
-                <a href="#" class="text-muted">Cancelar</a>
+            <div class="text-center mt-2">
+                <a href="{{request.META.HTTP_REFERER}}" class="text-muted">Cancelar</a>
             </div>
           </div>
         </form>

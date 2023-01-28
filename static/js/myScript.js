@@ -1,4 +1,4 @@
-buildList();
+
 
 
 function getCookie(name) {
@@ -19,7 +19,7 @@ function getCookie(name) {
 var csrftoken = getCookie('csrftoken');
 
 
-async function buildList(query = '') {
+function buildList(query = '') {
     var wrapper = document.getElementById("documents-list-wrapper");
     var resultCount = document.getElementById('result_count');
     wrapper.innerHTML = ''

@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-*!ag4#%(re9129-d9qxuj7(*27^gr)q3r+%q-z0ku(nr!m-nyg
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '46bd-165-90-99-16.eu.ngrok.io', 'localhost:8000']
+ALLOWED_HOSTS = ['127.0.0.1', '6aa1-165-90-99-16.eu.ngrok.io', 'localhost:8000']
 
 
 # Application definition
@@ -37,15 +37,17 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.st          aticfiles',
+    'django.contrib.staticfiles',
 
     'rest_framework',
     'corsheaders',
     'fontawesomefree',
     'crispy_forms',
+    'taggit',
 
     'api.apps.ApiConfig',
-    'frontend.apps.FrontendConfig'
+    'frontend.apps.FrontendConfig',
+    'accounts.apps.AccountsConfig'
 ]
 
 MIDDLEWARE = [

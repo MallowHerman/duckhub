@@ -1,6 +1,8 @@
 from django.urls import path
 from . import views
 
+app_name = 'api'
+
 urlpatterns = [
 	path('documents/', views.DocumentMixinView.as_view(), name='documents-list'),
 	path('documents/<str:pk>/', views.DocumentMixinView.as_view(), name='documents-detail'),
